@@ -65,13 +65,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-       String groupMenuText = (String)getGroup(groupPosition);
+//       String groupMenuText = (String)getGroup(groupPosition);
         if(convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.menu_item_group, null);
         }
         TextView txtMenuGroup = (TextView)convertView.findViewById(R.id.menuItemGroup);
-        txtMenuGroup.setText(groupMenuText);
+     //   txtMenuGroup.setText(groupMenuText);
         return convertView;
     }
 
