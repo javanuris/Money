@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Money</string>
+
+    <string-array name="menu_array">
+        <item>Menu1</item>
+        <item>Menu2</item>
+        <item>Menu3</item>
+        <item>Menu4</item>
+        <item>Menu5</item>
+        <item>Menu6</item>
+        <item>Menu7</item>
+        <item>Menu8</item>
+    </string-array>
+</resources>
