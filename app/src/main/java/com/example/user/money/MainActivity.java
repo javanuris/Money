@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.user.money.database.DbAdapter;
 import com.example.user.money.gui.MenuExpandableList;
 
 public class MainActivity extends Activity {
@@ -25,6 +26,9 @@ private static MenuExpandableList menuExpandableList;
   if(menuExpandableList ==null){
       menuExpandableList = new MenuExpandableList(this);
   }
+        DbAdapter dbAdapter = new DbAdapter(this);
+        dbAdapter.createDatabaseInstance();
+        dbAdapter.getTranscationList();
 
     }
 
