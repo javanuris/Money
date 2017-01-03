@@ -27,8 +27,7 @@ private static MenuExpandableList menuExpandableList;
       menuExpandableList = new MenuExpandableList(this);
   }
         DbAdapter dbAdapter = new DbAdapter(this);
-        dbAdapter.createDatabaseInstance();
-        dbAdapter.getTranscationList();
+
 
     }
 

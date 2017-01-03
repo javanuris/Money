@@ -9,7 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ExpandableListView;
 
-import com.example.user.money.Content;
+import com.example.user.money.OperationsFragment;
 import com.example.user.money.R;
 import com.example.user.money.adapters.ExpandableListAdapter;
 
@@ -22,6 +22,7 @@ import java.util.List;
  */
 
 public class MenuExpandableList {
+    public static final String OPERATION_TYPE = "nuris.kalenov.4courcse";
     private Activity context;
     private DrawerLayout navDrawer;
     private ExpandableListAdapter listAdapter;
@@ -62,9 +63,9 @@ public class MenuExpandableList {
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Fragment fragment = new Content();
+                Fragment fragment = new OperationsFragment();
                 Bundle args = new Bundle();
-                args.putInt("TEST_CONTENT" , childPosition);
+                args.putInt(OPERATION_TYPE, childPosition);
                 fragment.setArguments(args);
                 FragmentManager fragmentManager = context.getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame , fragment).commit();
