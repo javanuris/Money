@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Money</string>
+    <string name="app_name">Tenge</string>
 
     <string-array name="menu_array">
         <item>Menu1</item>

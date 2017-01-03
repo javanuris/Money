@@ -6,9 +6,10 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/menuItemGroup"
-        android:textSize="17sp"
-        android:textColor="@android:color/white"
-        android:paddingLeft="30dp"
+        android:textSize="27sp"
+        android:textColor="@android:color/holo_green_dark"
+        android:background="@android:color/darker_gray"
+        android:paddingLeft="40dp"
         android:textStyle="bold"
         />
 </LinearLayout>

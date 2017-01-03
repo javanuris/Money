@@ -43,7 +43,7 @@ public class OperationsFragment extends Fragment{
     private void fillTextContent(){
         List<Operation> listOperations = AppContext.getDbAdapter().getTranscations(transactionType);
         for(Operation operation: listOperations){
-            textView.setText(operation.getAmount().toString()+"\n");
+            textView.setText(textView.getText() + operation.getAmount().toString()+"\n");
 
         }
 
