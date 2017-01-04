@@ -5,7 +5,8 @@
     <string name = "menu3">Menu3</string>
 
     <string-array name = "menu4_childs">
-    <item>Расход</item>
+        <item>Все</item>
+        <item>Расход</item>
     <item>Доход</item>
 
 </string-array>

@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.user.money.adapters.OperationAdapter;
 import com.example.user.money.database.DbAdapter;
 import com.example.user.money.gui.MenuExpandableList;
 
@@ -35,9 +36,10 @@ private static MenuExpandableList menuExpandableList;
         DbAdapter dbAdapter = new DbAdapter(this);
     getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.main_icon);
+
     }
 
-    @Nullable
+
 
 
 

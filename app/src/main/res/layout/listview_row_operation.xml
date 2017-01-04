@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:text="amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_view_amount"
+        android:layout_below="@+id/text_view_name"
+        android:layout_alignStart="@+id/text_view_name" />
+
+    <TextView
+        android:text="date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_amount"
+        android:layout_alignStart="@+id/text_view_amount"
+        android:id="@+id/text_view_date" />
+
+    <TextView
+        android:text="source"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_view_source"
+        android:layout_marginStart="49dp"
+        android:layout_alignBaseline="@+id/text_view_currency"
+        android:layout_alignBottom="@+id/text_view_currency"
+        android:layout_toEndOf="@+id/text_view_currency" />
+
+    <TextView
+        android:text="currency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_view_currency"
+        android:layout_above="@+id/text_view_time"
+        android:layout_toEndOf="@+id/text_view_amount" />
+
+    <TextView
+        android:text="type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_view_type"
+        android:layout_below="@+id/text_view_source"
+        android:layout_alignEnd="@+id/text_view_source" />
+
+    <TextView
+        android:text="time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_view_time"
+        android:layout_below="@+id/text_view_amount"
+        android:layout_toEndOf="@+id/text_view_name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:id="@+id/text_view_name"
+        android:text="name"
+        android:textStyle="normal|bold"
+        android:textColor="?attr/colorPrimaryDark"
+        android:textSize="18sp"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_toEndOf="@+id/imageView" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/main_icon"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="19dp"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+</RelativeLayout>

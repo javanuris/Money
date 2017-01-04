@@ -5,6 +5,7 @@ package com.example.user.money.enums;
  */
 
 public enum OperationType {
+    ALL("0"),
     INCOME("1"),
     OUTCOME("2");
 

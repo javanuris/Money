@@ -6,10 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.user.money.enums.OperationType;
-import com.example.user.money.objects.Operation;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,21 +22,14 @@ public class DbAdapter {
     private Context context;
     private SQLiteDatabase db;
 
-    private ArrayList<Operation> listOperation = new ArrayList<>();
+    public static final String ALIAS_ID="_id";
+    public static final String ALIAS_AMOUNT="amount";
+    public static final String ALIAS_CURRENCY="currency";
+    public static final String ALIAS_OPERATION_DATE="operationDate";
+    public static final String ALIAS_OPERATION_TIME="operationTime";
+    public static final String ALIAS_SOURCE="source";
+    public static final String ALIAS_TYPE="type";
 
-    private String ALIAS_ID = "_id";
-    private String ALIAS_AMOUNT = "amout";
-    private String ALIAS_CURRENCY = "currency";
-    private String ALIAS_DATE_OPERATION = "date_operation";
-    private String ALIAS_SOURCE = "source";
-    private String ALIAS_TYPE = "type";
-
-   /* private static final String DB_CREATE = "CREATE TABLE [operation] ( "
-            +"[_id] INTEGER PRIMARY KEY ON CONFLICT FAIL AUTOINCREMENT, "
-            +"[date_operation]DATETIME NOT NULL, "
-            +"[amount] INTEGER NOT NULL, "
-            +"[type_id] INTEGER NOT NULL CONSTRAINT [fk_operation_type] REFERENCES [spr_operationType]([_id]) ON DELETE RESTRICT ON UPDATE CASCADE)";
-*/
 
     public DbAdapter(Context context){
         this.context = context;
@@ -47,61 +37,50 @@ public class DbAdapter {
         db = dbHelper.getReadableDatabase();
     }
 
-    public List<Operation> getCurrentOperations(){
-        return listOperation;
+
+    public Cursor getAllOperations(){
+        String sql ="select "
+                + "t.name as "+ALIAS_TYPE
+                + ",o._id as "+ALIAS_ID
+                + ",c.short_name as " + ALIAS_CURRENCY
+                + ",o.[amount] as " + ALIAS_AMOUNT
+                + ",o.[operation_date] as "+ALIAS_OPERATION_DATE
+                + ",o.[operation_time] as "+ALIAS_OPERATION_TIME
+                + ",s.[name] as "+ALIAS_SOURCE
+                +" from operations o "
+                + " inner join spr_currency c on o.currency_id=c.[_id]  "
+                + " inner join spr_operationsource s on o.source_id=s.[_id] "
+                + " inner join spr_operationtype t on o.source_id=t.[_id] ";
+        return db.rawQuery(sql ,null);
     }
 
-    private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-    public List<Operation> getAllTranscations(){
-        Cursor c =db.query(TABLE_OPERATION , null, null , null , null, null, null);
-        return fillListOperations(c);
-
-    }
-
-   public  List<Operation> getTranscations(OperationType type){
-       String sql = "select "
-               +" t.name as "+ALIAS_TYPE
-               +",o._id as "+ALIAS_ID
-               +",c.name as "+ALIAS_CURRENCY
-               +",o.[amout] as "+ALIAS_AMOUNT
-               +",o.[date_operation] as "+ALIAS_DATE_OPERATION
-               +",s.[name] as "+ALIAS_SOURCE
-               +" from operation o "
-               +"inner join spr_currency c on o.currency_id=c.[_id] "
-               +"inner join spr_operationsource s on o.source_id=s.[_id] "
-               +"inner join spr_operationtype t on o.source_id=t.[_id] "
-               +"where o.type_id=?";
-Cursor c = db.rawQuery(sql , new String[]{type.getId()});
-       return fillListOperations(c);
-
+   public  Cursor getOperations(OperationType type){
+       Cursor c = null;
+       StringBuilder builder = new StringBuilder();
+       builder.append(
+               "select "
+                       + "t.name as "+ALIAS_TYPE
+                       + ",o._id as "+ALIAS_ID
+                       + ",c.short_name as " + ALIAS_CURRENCY
+                       + ",o.[amount] as " + ALIAS_AMOUNT
+                       + ",o.[operation_date] as "+ALIAS_OPERATION_DATE
+                       + ",o.[operation_time] as "+ALIAS_OPERATION_TIME
+                       + ",s.[name] as "+ALIAS_SOURCE
+                       +" from operations o "
+                       + " inner join spr_currency c on o.currency_id=c.[_id]  "
+                       + " inner join spr_operationsource s on o.source_id=s.[_id] "
+                       + " inner join spr_operationtype t on o.source_id=t.[_id] "
+       );
+       if(type!=OperationType.ALL){
+            builder.append(" where o.type_id=?");
+           c = db.rawQuery(builder.toString() , new String[]{type.getId()});
+       }else{
+           c = db.rawQuery(builder.toString() , null);
+       }
+       return c;
    }
 
-    private List<Operation>fillListOperations(Cursor c){
-        listOperation.clear();
 
-        try {
-            if(c !=null){
-             while (c.moveToNext()){
-            Operation operation = new Operation();
-
-                 operation.setId(c.getInt(c.getColumnIndex(ALIAS_ID)));
-                 operation.setAmount(c.getDouble(c.getColumnIndex(ALIAS_AMOUNT)));
-                 operation.setCurrency(c.getString(c.getColumnIndex(ALIAS_CURRENCY)));
-                 operation.setDateOperation(dateFormat.parse(c.getString(c.getColumnIndex(ALIAS_DATE_OPERATION))));
-                 operation.setSource(c.getString(c.getColumnIndex(ALIAS_SOURCE)));
-                 operation.setType(c.getString(c.getColumnIndex(ALIAS_TYPE)));
-                    listOperation.add(operation);
-
-             }
-            }
-        }catch (ParseException e){
-                e.printStackTrace();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return listOperation;
-    }
 
     private static class DbHelper extends SQLiteOpenHelper{
         public DbHelper(Context context){

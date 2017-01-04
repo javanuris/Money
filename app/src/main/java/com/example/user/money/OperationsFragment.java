@@ -1,52 +1,53 @@
 package com.example.user.money;
 
 import android.app.Fragment;
+import android.app.ListFragment;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.example.user.money.adapters.OperationAdapter;
 import com.example.user.money.enums.OperationType;
 import com.example.user.money.gui.MenuExpandableList;
 import com.example.user.money.objects.AppContext;
-import com.example.user.money.objects.Operation;
 
 import java.util.List;
 
-public class OperationsFragment extends Fragment{
+public class OperationsFragment extends ListFragment{
     private TextView textView;
-    private OperationType transactionType;
+    private OperationType operationType;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_content , container, false);
-        textView = (TextView)view.findViewById(R.id.textView);
-        switch (Integer.valueOf(getArguments().getInt(MenuExpandableList.OPERATION_TYPE))){
-            case 0:{
-                this.transactionType = OperationType.INCOME;
-                break;
-            }
-            case 1:{
-                this.transactionType = OperationType.OUTCOME;
-                break;
-            }
-        }
-        fillTextContent();
-
-        return view;
-    }
-    private void fillTextContent(){
-        List<Operation> listOperations = AppContext.getDbAdapter().getTranscations(transactionType);
-        for(Operation operation: listOperations){
-            textView.setText(textView.getText() + operation.getAmount().toString()+"\n");
-
-        }
-
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        int type = Integer.valueOf(getArguments().getInt(MenuExpandableList.OPERATION_TYPE));
+        switch (type){
+            case 0 :{
+                this.operationType = OperationType.ALL;
+                break;
+            }
+            case 1 :{
+                this.operationType = OperationType.INCOME;
+                break;
+            }
+            case 2 :{
+                this.operationType = OperationType.OUTCOME;
+                break;
+            }
+
+        }
+        OperationAdapter operationAdapter = new OperationAdapter(getActivity() , AppContext.getDbAdapter().getOperations(operationType),false);
+    setListAdapter(operationAdapter);
+
+    }
 }
+
+
