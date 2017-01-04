@@ -9,7 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ExpandableListView;
 
-import com.example.user.money.OperationsFragment;
+import com.example.user.money.main.OperationsFragment;
 import com.example.user.money.R;
 import com.example.user.money.adapters.ExpandableListAdapter;
 

@@ -2,6 +2,7 @@ package com.example.user.money.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v4.view.LayoutInflaterFactory;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,11 @@ import android.widget.TextView;
 
 import com.example.user.money.R;
 import com.example.user.money.database.DbAdapter;
+import com.example.user.money.enums.OperationType;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 /**
  * Created by User on 04.01.2017.
@@ -19,6 +25,12 @@ import com.example.user.money.database.DbAdapter;
 
 public class OperationAdapter extends CursorAdapter{
     private Context context;
+
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    private SimpleDateFormat timeFormat = new SimpleDateFormat("kk:mm");
+
+    private Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+
     private LayoutInflater layoutInflater;
     public OperationAdapter(Context context, Cursor c, boolean autoRequery) {
         super(context, c, autoRequery);
@@ -31,7 +43,7 @@ public class OperationAdapter extends CursorAdapter{
         View view = layoutInflater.inflate(R.layout.listview_row_operation , parent , false);
 
         ViewHolder holder = new ViewHolder();
-        holder.source = (TextView)view.findViewById(R.id.text_view_source);
+        holder.source = (TextView)view.findViewById(R.id.text_view_name);
         holder.date = (TextView)view.findViewById(R.id.text_view_date);
         holder.time = (TextView)view.findViewById(R.id.text_view_time);
         holder.image = (ImageView) view.findViewById(R.id.imageView);
@@ -50,6 +62,18 @@ public class OperationAdapter extends CursorAdapter{
         holder.source.setText(cursor.getString(cursor.getColumnIndex(DbAdapter.ALIAS_SOURCE)));
         holder.type.setText(cursor.getString(cursor.getColumnIndex(DbAdapter.ALIAS_TYPE)));
         holder.currency.setText(cursor.getString(cursor.getColumnIndex(DbAdapter.ALIAS_CURRENCY)));
+
+        long dateTime = cursor.getLong(cursor.getColumnIndex(DbAdapter.ALIAS_OPERATION_DATETIME));
+        calendar.setTimeInMillis(dateTime);
+
+        holder.date.setText(dateFormat.format(calendar.getTime())+ ", ");
+        holder.time.setText(dateFormat.format(calendar.getTime()));
+
+        if(cursor.getInt(cursor.getColumnIndex(DbAdapter.ALIAS_TYPE_ID))==Integer.valueOf(OperationType.INCOME.getId())){
+            holder.type.setTextColor(Color.GREEN);
+        }else {
+            holder.type.setTextColor(Color.RED);
+        }
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.user.money;
+package com.example.user.money.main;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.user.money.R;
 import com.example.user.money.adapters.OperationAdapter;
 import com.example.user.money.database.DbAdapter;
 import com.example.user.money.gui.MenuExpandableList;

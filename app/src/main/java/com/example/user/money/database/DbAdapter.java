@@ -25,11 +25,10 @@ public class DbAdapter {
     public static final String ALIAS_ID="_id";
     public static final String ALIAS_AMOUNT="amount";
     public static final String ALIAS_CURRENCY="currency";
-    public static final String ALIAS_OPERATION_DATE="operationDate";
-    public static final String ALIAS_OPERATION_TIME="operationTime";
+    public static final String ALIAS_OPERATION_DATETIME="operationDateTime";
     public static final String ALIAS_SOURCE="source";
     public static final String ALIAS_TYPE="type";
-
+    public static final String ALIAS_TYPE_ID="type_id";
 
     public DbAdapter(Context context){
         this.context = context;
@@ -41,11 +40,11 @@ public class DbAdapter {
     public Cursor getAllOperations(){
         String sql ="select "
                 + "t.name as "+ALIAS_TYPE
+                + ",t._id as "+ALIAS_TYPE_ID
                 + ",o._id as "+ALIAS_ID
                 + ",c.short_name as " + ALIAS_CURRENCY
                 + ",o.[amount] as " + ALIAS_AMOUNT
-                + ",o.[operation_date] as "+ALIAS_OPERATION_DATE
-                + ",o.[operation_time] as "+ALIAS_OPERATION_TIME
+                + ",o.[operation_datetime] as "+ALIAS_OPERATION_DATETIME
                 + ",s.[name] as "+ALIAS_SOURCE
                 +" from operations o "
                 + " inner join spr_currency c on o.currency_id=c.[_id]  "
@@ -60,11 +59,11 @@ public class DbAdapter {
        builder.append(
                "select "
                        + "t.name as "+ALIAS_TYPE
+                       + ",t._id as "+ALIAS_TYPE_ID
                        + ",o._id as "+ALIAS_ID
                        + ",c.short_name as " + ALIAS_CURRENCY
                        + ",o.[amount] as " + ALIAS_AMOUNT
-                       + ",o.[operation_date] as "+ALIAS_OPERATION_DATE
-                       + ",o.[operation_time] as "+ALIAS_OPERATION_TIME
+                       + ",o.[operation_datetime] as "+ALIAS_OPERATION_DATETIME
                        + ",s.[name] as "+ALIAS_SOURCE
                        +" from operations o "
                        + " inner join spr_currency c on o.currency_id=c.[_id]  "
