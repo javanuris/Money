@@ -1,4 +1,4 @@
-package com.example.user.money.main;
+package com.example.user.money.fragments;
 
 import android.app.Fragment;
 import android.app.ListFragment;

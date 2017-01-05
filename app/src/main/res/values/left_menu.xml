@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name = "menu1">Menu1</string>
-    <string name = "menu2">Menu2</string>
+    <string name = "menu_operatoins">Операций</string>
+    <string name = "menu_setting">Настройка</string>
     <string name = "menu3">Menu3</string>
 
-    <string-array name = "menu4_childs">
-        <item>Все</item>
-        <item>Расход</item>
-    <item>Доход</item>
+    <string-array name = "child_menu_operations">
+        <item>@string/operations_all</item>
+        <item>@string/operations_income</item>
+    <item>@string/operations_outcome</item>
 
 </string-array>
 
-    <string-array name = "menu2_childs">
-        <item>Child1</item>
-        <item>Child2</item>
-        <item>Child3</item>
-
+    <string-array name = "child_menu_settings">
+        <item>@string/setting_common</item>
+        <item>@string/setting_spr</item>
     </string-array>
     <string-array name = "menu3_childs">
         <item>Child1</item>
         <item>Child2</item>
-        <item>Child3</item>
-        <item>Child4</item>
-        <item>Child5</item>
+
     </string-array>
 </resources>

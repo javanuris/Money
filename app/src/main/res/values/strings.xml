@@ -1,14 +1,16 @@
 <resources>
     <string name="app_name">Tenge</string>
+    <string name = "title_activity_menu">Tenge</string>
+    <string name = "action_setting">Settings</string>
+    <string name = "use_cloud">Использовать ICloid</string>
+    <string name = "setting_backup">Настройка бэкапа</string>
 
-    <string-array name="menu_array">
-        <item>Menu1</item>
-        <item>Menu2</item>
-        <item>Menu3</item>
-        <item>Menu4</item>
-        <item>Menu5</item>
-        <item>Menu6</item>
-        <item>Menu7</item>
-        <item>Menu8</item>
-    </string-array>
+    <string name = "title_acctivity_content">Content</string>
+    <string name = "setting_spr">Справочники</string>
+    <string name = "setting_common">Общее</string>
+
+    <string name = "operations_all">Все</string>
+    <string name = "operations_income">Доход</string>
+    <string name = "operations_outcome">Расходы</string>
+
 </resources>

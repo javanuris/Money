@@ -1,4 +1,4 @@
-package com.example.user.money.main;
+package com.example.user.money.activites;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -36,7 +36,7 @@ private static MenuExpandableList menuExpandableList;
   }
         DbAdapter dbAdapter = new DbAdapter(this);
     getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.mipmap.main_icon);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
     }
 

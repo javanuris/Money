@@ -29,6 +29,7 @@ public class DbAdapter {
     public static final String ALIAS_SOURCE="source";
     public static final String ALIAS_TYPE="type";
     public static final String ALIAS_TYPE_ID="type_id";
+    public static final String ALIAS_SOURCE_ID="sourceId";
 
     public DbAdapter(Context context){
         this.context = context;
@@ -36,22 +37,6 @@ public class DbAdapter {
         db = dbHelper.getReadableDatabase();
     }
 
-
-    public Cursor getAllOperations(){
-        String sql ="select "
-                + "t.name as "+ALIAS_TYPE
-                + ",t._id as "+ALIAS_TYPE_ID
-                + ",o._id as "+ALIAS_ID
-                + ",c.short_name as " + ALIAS_CURRENCY
-                + ",o.[amount] as " + ALIAS_AMOUNT
-                + ",o.[operation_datetime] as "+ALIAS_OPERATION_DATETIME
-                + ",s.[name] as "+ALIAS_SOURCE
-                +" from operations o "
-                + " inner join spr_currency c on o.currency_id=c.[_id]  "
-                + " inner join spr_operationsource s on o.source_id=s.[_id] "
-                + " inner join spr_operationtype t on o.source_id=t.[_id] ";
-        return db.rawQuery(sql ,null);
-    }
 
    public  Cursor getOperations(OperationType type){
        Cursor c = null;
@@ -65,13 +50,14 @@ public class DbAdapter {
                        + ",o.[amount] as " + ALIAS_AMOUNT
                        + ",o.[operation_datetime] as "+ALIAS_OPERATION_DATETIME
                        + ",s.[name] as "+ALIAS_SOURCE
+                       + ",o.[source_id] as "+ALIAS_SOURCE_ID
                        +" from operations o "
                        + " inner join spr_currency c on o.currency_id=c.[_id]  "
                        + " inner join spr_operationsource s on o.source_id=s.[_id] "
                        + " inner join spr_operationtype t on o.source_id=t.[_id] "
        );
        if(type!=OperationType.ALL){
-            builder.append(" where o.type_id=?");
+            builder.append(" where s.type_id=?");
            c = db.rawQuery(builder.toString() , new String[]{type.getId()});
        }else{
            c = db.rawQuery(builder.toString() , null);

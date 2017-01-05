@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.example.user.money.R;
 import com.example.user.money.database.DbAdapter;
 import com.example.user.money.enums.OperationType;
+import com.example.user.money.objects.AppContext;
+import com.example.user.money.objects.ImageUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,6 +28,7 @@ import java.util.TimeZone;
 public class OperationAdapter extends CursorAdapter{
     private Context context;
 
+    private AppContext appContext;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
     private SimpleDateFormat timeFormat = new SimpleDateFormat("kk:mm");
 
@@ -34,7 +37,7 @@ public class OperationAdapter extends CursorAdapter{
     private LayoutInflater layoutInflater;
     public OperationAdapter(Context context, Cursor c, boolean autoRequery) {
         super(context, c, autoRequery);
-        this.context =context;
+        this.appContext =(AppContext)context.getApplicationContext();
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -63,6 +66,14 @@ public class OperationAdapter extends CursorAdapter{
         holder.type.setText(cursor.getString(cursor.getColumnIndex(DbAdapter.ALIAS_TYPE)));
         holder.currency.setText(cursor.getString(cursor.getColumnIndex(DbAdapter.ALIAS_CURRENCY)));
 
+        String imagePath = appContext.getIconsFolder()+"/"+cursor.getString(cursor.getColumnIndex(DbAdapter.ALIAS_SOURCE_ID))+".png";
+
+        try {
+            holder.image.setImageBitmap(ImageUtils.getSizedBitmap(imagePath , AppContext.IMAGE_WIDTH_THMB , AppContext.IMAGE_HEIGHT_THMB));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         long dateTime = cursor.getLong(cursor.getColumnIndex(DbAdapter.ALIAS_OPERATION_DATETIME));
         calendar.setTimeInMillis(dateTime);
 
@@ -70,9 +81,9 @@ public class OperationAdapter extends CursorAdapter{
         holder.time.setText(dateFormat.format(calendar.getTime()));
 
         if(cursor.getInt(cursor.getColumnIndex(DbAdapter.ALIAS_TYPE_ID))==Integer.valueOf(OperationType.INCOME.getId())){
-            holder.type.setTextColor(Color.GREEN);
+            holder.type.setTextColor(context.getResources().getColor(R.color.green_dark));
         }else {
-            holder.type.setTextColor(Color.RED);
+            holder.type.setTextColor(context.getResources().getColor(R.color.red_dark));
         }
     }
 

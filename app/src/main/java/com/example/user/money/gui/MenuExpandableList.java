@@ -9,9 +9,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ExpandableListView;
 
-import com.example.user.money.main.OperationsFragment;
+import com.example.user.money.fragments.OperationsFragment;
 import com.example.user.money.R;
 import com.example.user.money.adapters.ExpandableListAdapter;
+import com.example.user.money.fragments.SettingFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,13 +64,28 @@ public class MenuExpandableList {
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Fragment fragment = new OperationsFragment();
-                Bundle args = new Bundle();
-                args.putInt(OPERATION_TYPE, childPosition);
-                fragment.setArguments(args);
-                FragmentManager fragmentManager = context.getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame , fragment).commit();
-                navDrawer.closeDrawer(Gravity.LEFT);
+                switch (groupPosition) {
+                    case 0: {
+                        Fragment fragment = new OperationsFragment();
+                        Bundle args = new Bundle();
+                        args.putInt(OPERATION_TYPE, childPosition);
+                        fragment.setArguments(args);
+                        FragmentManager fragmentManager = context.getFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                        break;
+                    }
+                    case 1: {
+                        if(childPosition == 0){
+                            Fragment fragment = new SettingFragment();
+                            FragmentManager fragmentManager = context.getFragmentManager();
+                            fragmentManager.beginTransaction().replace(R.id.content_frame , fragment).commit();
+                        }
+                    break;
+                    }
+                    default:
+                        break;
+                }
+                    navDrawer.closeDrawer(Gravity.LEFT);
                 return true;
             }
         });
@@ -79,16 +95,16 @@ public class MenuExpandableList {
         listGroup = new ArrayList<>();
         mapChild = new HashMap<String, List<String>>();
 
-        listGroup.add(context.getResources().getString(R.string.menu1));
-        listGroup.add(context.getResources().getString(R.string.menu2));
+        listGroup.add(context.getResources().getString(R.string.menu_operatoins));
+        listGroup.add(context.getResources().getString(R.string.menu_setting));
         listGroup.add(context.getResources().getString(R.string.menu3));
 
         List<String>menu1 = new ArrayList<>();
-        for(String child :context.getResources().getStringArray(R.array.menu4_childs)){
+        for(String child :context.getResources().getStringArray(R.array.child_menu_operations)){
             menu1.add(child);
         }
         List<String>menu2 = new ArrayList<>();
-        for(String child :context.getResources().getStringArray(R.array.menu2_childs)){
+        for(String child :context.getResources().getStringArray(R.array.child_menu_settings)){
             menu2.add(child);
         }
         List<String>menu3 = new ArrayList<>();
